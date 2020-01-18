@@ -20,22 +20,25 @@
 // choice2 = computerChoice
 // 
 // allows computer and user to select, variables stored as strings **//
+
+
+//Scoring, global variables
 let userScore = 0;
 let computerScore = 0;
 
 
-
+//main function
 function game() {
-    
+    //iterating by one to simulate no more than 5 games. 
     for( i = 0; i <= 5; i++) {
         selections();
         playRound(); 
         scores();
     }
 }
-
+//player choice vs computer choice
 function playRound(choice1, choice2){
-
+//equavalent choices
     if(choice1 === choice2){
         return("The result is a tie");
     }
@@ -71,7 +74,7 @@ function playRound(choice1, choice2){
     
 }
 
-
+//allowing both user and computer selections
 function selections() {
     let userChoice = prompt("Rock, Paper, or Scissors");
 
