@@ -37,21 +37,39 @@ let computerScore = 0;
 //        scores();
 //    }
 //}
+
+//
+
+//main event listener for the buttons. 
 const buttons = document.querySelectorAll('button')
 buttons.forEach(button => button.addEventListener('click',game)); 
 
-//this section is for the updating of the scores
-
-function displaySelections(choice1,choice2) {
+//this section is for the updating of the Choices
+//functional
+function displaySelections(choice1, choice2) {
     let pSelections = document.getElementById('userSelection');
-    pSelections.textContent('The user Selection is ' + choice1);
+    pSelections.textContent = 'The User Selection Is ' + choice1;
 
-    let cSelections = document.getElementById('computerSelection');
-    cSelections.textContent('The computer chose: ' + choice2);
+    let cSelections = document.getElementById('compSelection');
+    cSelections.textContent = 'The Computer Chose ' + choice2;  
 }
 
+//function below intended to display winner of each round. 
+//functional
+const winners = document.getElementById('.score')
+
+function displayWinner(roundWinner) {
 
 
+	let winner = document.getElementById('winner')
+    winner.textContent = roundWinner; 
+
+   // document.appendChild(roundWinner);
+    
+}
+
+//clickable button for player selection. 
+//successful implementation of the this. call. 
 
 function playerSelection() {
     const choice1 = this.id;
@@ -59,25 +77,35 @@ function playerSelection() {
     return choice1;
 }
 
+
+//Reset game score, invoked after the 5th victory. 
+// functional
+// fixed syntax errors and function called successfully after Scores(); 
+
 function resetScore() {
 	userScore = 0;
 	computerScore = 0; 
 }
-
+// Main call for the event listener. Main container function to invoke other individual functions. 
+//semi-functioning currently. 1.21.2020
 function game(e) {
+    
 	let choice1 = e.target.id;
 	let choice2 = selections();
+	displaySelections(choice1, choice2);
     playRound(choice1,choice2);
-		scores();
-		if(userScore == 5){
-			console.log("Game Over, Player Wins!");
-			resetScore(); 
-		}else if(computerScore == 5) {
-			console.log("Game Over, Computer Wins!");
-			resetScore();
-		}else {
-			return; 
-		}
+    displayWinner(roundWinner); 
+    scores(); 
+	if(userScore == 5){
+		console.log("Game Over, Player Wins!");
+		resetScore(); 
+	}else if(computerScore == 5) {
+		console.log("Game Over, Computer Wins!");
+		resetScore();
+	}else {
+		return; 
+	}
+	
 		
 }
 
@@ -87,40 +115,42 @@ function playRound(choice1, choice2){
 	console.log(choice1 + " is the pick of the user")
 	console.log(choice2 + " is the pick of the computer")
     if(choice1 === choice2){
-        return("The result is a tie");
+        console.log("Tie!")
+		return roundWinner = 'Tie!'
+        //return("The result is a tie");
     }
     if(choice1 === "rock"){
         if(choice2 === "scissors"){
             userScore++;
-            console.log("rock vs scissors");
-            return ("Rock Wins")
+            return roundWinner = 'Player!'
+            //return ("Player Wins")
         } else {
             computerScore++;
-            console.log("rock vs paper");
-            return("paper Wins!")
+            return roundWinner = 'computer!'
+            //return("Computer Wins!")
         }
     }
 
     if(choice1 === "paper"){
         if(choice2 === "rock"){
             userScore++;
-            return ("paper Wins")
+            return roundWinner = "Player!"
         } else {
             computerScore++;
-            return("scissors Wins!")
+            return roundWinner = "Computer!"
         }
     }
 
     if(choice1 === "scissors"){
         if(choice2 === "paper"){
             userScore++;
-            return ("Scissors Wins")
+            return roundWinner = "Player!"
         } else {
             computerScore++;
-            return("rock Wins!")
+            return roundWinner = "Computer!"
         }
     }
-    
+    return roundWinner; 
 }
 
 //allowing both user and computer selections
@@ -141,8 +171,23 @@ function selections() {
     return choice2; 
 }
 
+const gScores = document.querySelector('#scores')
+
+//function returns the scores in both the console, and the DOM. 
+//Functional. 
+//addressed syntax errors in calling the gScores section previously stated. 
+
 function scores() {
  	console.log(userScore);
-	console.log(computerScore);
+    console.log(computerScore);
+    
+
+    let cScore = document.getElementById('cScore');
+    cScore.textContent = "Computer Score: " + computerScore;
+
+    let pScore = document.getElementById('pScore');
+    pScore.textContent = "User Score: " + userScore;
+
+    gScores.appendChild(cScore, pScore)
 }
 
